@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -28,7 +29,61 @@ public final class Constants {
         public static double RPMToFalconVelocity (double inputRPM) {
           return (2048 * inputRPM)/60000;
         }
-        
+      }
+
+    public static class FieldConstants extends SubsystemBase { //theoretically this could be moved to subsystems, but I like it here
+      //Declare Gyro in here
+      public static double GYRO_ZERO = 0; //For zeroing the gyro
+      public static double TEMP_GYRO_VALUES = 0; //Replace with gyro object
+      public static boolean USING_FIELD = false; //on startup the robot will be robot-oriented until turned on
+
+      public static double vxr; //X and Y velocities relative to the robot. 
+      public static double vyr;
+
+      public static boolean ZERO_ON_CHANGE = true; //This zeroes the field-orientation to the forward direction of the robot every time it's turned on
+
+      public static double GYRO_READ; 
+
+      
+
+      public static void changeOrientation(boolean value) {
+        USING_FIELD = value; //input specifies directly whether it should be on or off
+        if(ZERO_ON_CHANGE) {
+          zero();
+        }
+      }
+
+      public static void changeOrientation() {
+        USING_FIELD = !USING_FIELD; //When there is no input it just reverses
+        if(ZERO_ON_CHANGE) {
+          zero();
+        }
+      }
+
+      public static void zero() {
+        GYRO_ZERO = TEMP_GYRO_VALUES;
+      }
+
+      //Converting two drive velocities from feild-oriented to robot-oriented
+      //Rotation is not included in here as rotation will always be robot-oriented when changed
+
+      public static void getFieldVelocities(double vxf, double vyf) {
+        if(USING_FIELD) {
+            double theta = TEMP_GYRO_VALUES + Math.atan(vxf/vyf);
+            double vf = Math.sqrt(Math.pow(vxf,2)+Math.pow(vyf,2));
+            vxr = vf * Math.sin(theta);
+            vyr = vf * Math.cos(theta);
+
+        } else {
+          vxr = vxf;
+          vyr = vyf;
+        }
+      }
+
+      @Override //Here the gyro readout is periodically refreshed
+      public void periodic() {
+        GYRO_READ = TEMP_GYRO_VALUES - GYRO_ZERO; 
+      }
 
     }
 
