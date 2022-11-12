@@ -1,4 +1,3 @@
 # swerveCalculator1
 
-Swerve math
-Testbed for 2023 Robot Code
+Swerve Math Testbed for 2023 Robot Code
