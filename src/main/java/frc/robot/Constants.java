@@ -20,7 +20,6 @@ public final class Constants {
     
   /************************* DRIVE *************************/
     public static final class SwerveConstants {
-        public static final double FALLOFF_STOP_ERROR = 90; //The angle away from the desired angle at which the motor stops turning 
         public static final double SWERVE_GEAR_RATIO_DRIVE = 1; // Gear ratio of swerve drive
         public static final double SWERVE_GEAR_RATIO_STEER = 1;
         public static final float MODULE_TURN_TIME_SECONDS = 1;
@@ -28,6 +27,14 @@ public final class Constants {
 
         public static double RPMToFalconVelocity (double inputRPM) {
           return (2048 * inputRPM)/60000;
+        }
+        public static double CalculateFalloffMultiplier(double inputAngle) {
+          inputAngle = Math.abs(inputAngle);
+          if(Math.pow(0.95,inputAngle) < 0.1) {
+            return 0;
+          } else {
+            return Math.pow(0.95,inputAngle);
+          }
         }
       }
 
