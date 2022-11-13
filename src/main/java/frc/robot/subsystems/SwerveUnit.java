@@ -26,12 +26,13 @@ public class SwerveUnit extends SubsystemBase {
 
   /** Creates a new SwerveUnit. */
 
-  public SwerveUnit(double circumferenceM, boolean invertedDrive, boolean invertedSteer, TalonFX driveMotor, TalonFX steerMotor, String moduleName) {
+  public SwerveUnit(double circumferenceM, boolean invertedDrive, boolean invertedSteer, TalonFX driveMotor, TalonFX steerMotor, CANCoder magEncoder, String moduleName) {
    this.circumferenceM = circumferenceM;
    this.invertedDrive = invertedDrive;
    this.invertedSteer = invertedSteer;
    this.driveMotor = driveMotor; //Get the motor configs from a superceding class
    this.steerMotor = steerMotor;
+   this.magEncoder = magEncoder;
    this.moduleName = moduleName;
   }
 
