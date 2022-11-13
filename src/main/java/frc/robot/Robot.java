@@ -20,6 +20,8 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+  public RobotContainer robotContainer = new RobotContainer();
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +30,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.addOption("No Auto" , null);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
 
@@ -39,7 +42,9 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    robotContainer.refreshPeriodic();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -74,7 +79,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when teleop is enabled. */
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    robotContainer.resetAllModules();
+  }
 
   /** This function is called periodically during operator control. */
   @Override
@@ -82,11 +89,15 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    robotContainer.haltAllModules();
+  }
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    robotContainer.haltAllModules();
+  }
 
   /** This function is called once when test mode is enabled. */
   @Override

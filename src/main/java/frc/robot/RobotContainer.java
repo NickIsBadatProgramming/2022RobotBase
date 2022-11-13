@@ -8,6 +8,7 @@ import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveUnit;
 
 public class RobotContainer {
+    //This is kind of the brain of the robot, it controls all subsystems and commands in one hub that is scheduled by the Robot class. 
 
 
     
@@ -24,7 +25,10 @@ public class RobotContainer {
     public static TalonFX driveMotorBL, steerMotorBL;
     public static TalonFX driveMotorBR, steerMotorBR;
 
+
     public static CANCoder cFR, cFL, cBL, cBR;
+
+    double xAxis, yAxis, zAxis;
 
     /* ---- Individual Swerve Modules ---- */
     SwerveUnit frontRight = new SwerveUnit(Constants.SwerveConstants.WheelCircumferenceM, false, false, driveMotorFR, steerMotorFR, cFR, "Front Right");
@@ -36,9 +40,31 @@ public class RobotContainer {
 
     public RobotContainer() {
         logitech3d = new Joystick(0);
-        double xAxis = logitech3d.getRawAxis(1);
-        double yAxis = -logitech3d.getRawAxis(2);
-        double zAxis = logitech3d.getRawAxis(3);
+
+    }
+
+    public void refreshPeriodic() {
+        this.xAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(1));
+        this.yAxis = Constants.JoystickLimits.adjustForDeadzone(-logitech3d.getRawAxis(2));
+        this.zAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(3));
+    }
+
+    public void haltAllModules() {
+        frontRight.Halt();
+        frontLeft.Halt();
+        backLeft.Halt();
+        backRight.Halt();
+    }
+
+    public void resetAllModules() {
+        frontRight.ResetHalt();
+        frontLeft.ResetHalt();
+        backLeft.ResetHalt();
+        backRight.ResetHalt();
+    }
+
+    public void Drive() {
+        swerve.Drive(Constants.JoystickLimits.getXFromJoystickPosition(this.xAxis), Constants.JoystickLimits.getYFromJoystickPosition(this.yAxis), Constants.JoystickLimits.getZFromJoystickPosition(this.zAxis));
     }
 
     

@@ -49,6 +49,7 @@ public final class Constants {
       public static final double X_AXIS_MAX_SPEED_MS = 5; //speeds in meters/second - X and Y should usually be the same
       public static final double Y_AXIS_MAX_SPEED_MS = 5;
       public static final double Z_AXIS_MAX_ROTATION_RS = 0.5; //rotations per second
+      public static final double CONTROLLER_DEADZONE = 0.2;
 
       public static double getXFromJoystickPosition(double value) { //since values of the joystick are from -1 to 1, you need to convert them to their respected extremes
         return value * X_AXIS_MAX_SPEED_MS; //linear return, could always be exponential or quadratic
@@ -60,6 +61,17 @@ public final class Constants {
 
       public static double getZFromJoystickPosition(double value) {
         return value * Z_AXIS_MAX_ROTATION_RS;
+      }
+
+      //Controller deadzones
+
+      public static double adjustForDeadzone(double value) {
+        if(Math.abs(value) > CONTROLLER_DEADZONE) {
+          return value;
+        } else {
+          return 0;
+        }
+
       }
 
 
