@@ -29,6 +29,18 @@ public class SwerveGroup extends SubsystemBase{
     public static void zero() {
         gyroZero = Gyro_Temp_Angle;
     }
+    
+    public static void switchToField { //Methods for changing field or robot orientation 
+        useField = true;
+    }
+    
+    public static void switchToRobot {
+        useField = false;
+    }
+    
+    public static void switchField {
+        useField = !useField;
+    }
 
     public SwerveGroup(SwerveUnit moduleFR1, SwerveUnit moduleFL2, SwerveUnit moduleBL3, SwerveUnit moduleBR4) {
         this.moduleFR1 = moduleFR1;
