@@ -30,15 +30,15 @@ public class SwerveGroup extends SubsystemBase{
         gyroZero = Gyro_Temp_Angle;
     }
     
-    public static void switchToField { //Methods for changing field or robot orientation 
+    public static void switchToField() { //Methods for changing field or robot orientation 
         useField = true;
     }
     
-    public static void switchToRobot {
+    public static void switchToRobot() {
         useField = false;
     }
     
-    public static void switchField {
+    public static void switchField() {
         useField = !useField;
     }
 
