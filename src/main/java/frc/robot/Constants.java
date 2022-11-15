@@ -78,4 +78,14 @@ public final class Constants {
     }
 
   /************************* DRIVE *************************/
+
+
+  /************************* TIME *************************/
+  public static class Time {
+    public final int INTERVAL_MILLISECONDS = 10;
+
+    public static long nanoToMilli(long nanoSeconds) {
+      return nanoSeconds / 1000000;
+    }
+  }
 }
