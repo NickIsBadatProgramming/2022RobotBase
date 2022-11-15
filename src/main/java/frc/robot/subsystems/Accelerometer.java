@@ -7,6 +7,9 @@ import frc.robot.Constants;
 
 public class Accelerometer extends SubsystemBase {
 
+    //This class allows the robot to use it's onboard RoboRIO accelerometer for measurements. While precise, it's not going to be extremely accurate. 
+    //Don't assume that all measurements will be perfect because certain liberties were taken to ensure that measurements weren't too noisy, and 
+    //certain technical and physical limitations apply. Keep this in mind when using this. 
     BuiltInAccelerometer myAccelerometer;
     double filteredX;
     double filteredY;
@@ -18,6 +21,7 @@ public class Accelerometer extends SubsystemBase {
     
     public Accelerometer(BuiltInAccelerometer myAccelerometer) {
         this.myAccelerometer = myAccelerometer;
+        zeroVelocity();
     }
     
     //Get the moving average of the filters so that the acceleration isn't so noisy
@@ -34,6 +38,15 @@ public class Accelerometer extends SubsystemBase {
 
     public void resetTimer() { //adds a zero to an internal timer
         timerZero = System.nanoTime();
+    }
+
+    // get commands
+    public double getVelocityX() {
+        return this.velocityX;
+    }
+
+    public double getVelocityY() {
+        return this.velocityY;
     }
 
     @Override 
