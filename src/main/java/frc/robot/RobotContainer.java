@@ -3,7 +3,10 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.subsystems.Accelerometer;
+import frc.robot.subsystems.DisplacementTracker;
 import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveUnit;
 
@@ -67,10 +70,9 @@ public class RobotContainer {
         swerve.Drive(Constants.JoystickLimits.getXFromJoystickPosition(this.xAxis), Constants.JoystickLimits.getYFromJoystickPosition(this.yAxis), Constants.JoystickLimits.getZFromJoystickPosition(this.zAxis));
     }
 
-    
-
-    
-
-
+    /* ---- Onboard Measurements ---- */
+    BuiltInAccelerometer bIA = new BuiltInAccelerometer(); //make sure all of these use the same accelerometer object
+    Accelerometer accelerometer = new Accelerometer(bIA);
+    DisplacementTracker displacementTracker = new DisplacementTracker(bIA);
 
 }

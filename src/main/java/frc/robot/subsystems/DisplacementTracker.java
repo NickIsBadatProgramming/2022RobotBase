@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 //This is a special Accelerometer that should be created when starting to track a displacement and discarded when finished. 
@@ -51,6 +52,8 @@ public class DisplacementTracker extends Accelerometer{
             interval = System.nanoTime();
         }
 
+        SmartDashboard.putNumber("X Displacement (Interpolated)" , xDisplacement); //We should already get outputs of velocity and acceleration from Accelerometer so no need to do it here. 
+        SmartDashboard.putNumber("Y Displacement (Interpolated)", yDisplacement);
         
 
 

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -52,8 +53,8 @@ public class Accelerometer extends SubsystemBase {
     @Override 
     public void periodic() {
         currentTimeMS = Constants.Time.nanoToMilli(System.nanoTime() - timerZero);
-        filteredX = xAccel.calculate(myAccelerometer.getX());
-        filteredY = yAccel.calculate(myAccelerometer.getX());
+        filteredX = xAccel.calculate(myAccelerometer.getX() * 9.81); //Accelerometer measures in G's so to turn G's into raw m/s/s we multiply by 9.81 (which is G)
+        filteredY = yAccel.calculate(myAccelerometer.getX() * 9.81);
 
         if(System.nanoTime() - interval >= 10000000 && System.nanoTime() - interval <= 0) { //Every ten milliseconds (the zero is there in case the cpu overflows or something bugs out)
             interval = System.nanoTime();
@@ -64,5 +65,10 @@ public class Accelerometer extends SubsystemBase {
         if(System.nanoTime() - interval <= 0) { //When this becomes negative, it's because of a bug. we just discard it and reset the clock. 
             interval = System.nanoTime();
         }
+
+        SmartDashboard.putNumber("X Acceleration", filteredX);
+        SmartDashboard.putNumber("Y Acceleration" , filteredY);
+        SmartDashboard.putNumber("X Velocity (Interpolated)", velocityX);
+        SmartDashboard.putNumber("Y Velocity (Interpolated)", velocityY);
     }
 }
