@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -19,15 +21,17 @@ public class SwerveGroup extends SubsystemBase{
     SwerveUnit moduleBL3;
     SwerveUnit moduleBR4;
 
+    AHRS navx;
+
 
     //Get gyro values
-    static double Gyro_Temp_Angle = 0; //Replace with gyro object
+    
     static double gyroZero = 0;
     static double rawAngle;
     static boolean useField = false;
 
-    public static void zero() {
-        gyroZero = Gyro_Temp_Angle;
+    public void zero() {
+        gyroZero = navx.getAngle();
     }
     
     public static void switchToField() { //Methods for changing field or robot orientation 
@@ -42,11 +46,12 @@ public class SwerveGroup extends SubsystemBase{
         useField = !useField;
     }
 
-    public SwerveGroup(SwerveUnit moduleFR1, SwerveUnit moduleFL2, SwerveUnit moduleBL3, SwerveUnit moduleBR4) {
+    public SwerveGroup(SwerveUnit moduleFR1, SwerveUnit moduleFL2, SwerveUnit moduleBL3, SwerveUnit moduleBR4, AHRS navx) {
         this.moduleFR1 = moduleFR1;
         this.moduleFL2 = moduleFL2;
         this.moduleBL3 = moduleBL3;
         this.moduleBR4 = moduleBR4;
+        this.navx = navx;
     }
 
     public void Drive(double vx, double vy, double r) {
@@ -83,7 +88,7 @@ public class SwerveGroup extends SubsystemBase{
 
   @Override
   public void periodic() {
-    rawAngle = Gyro_Temp_Angle - gyroZero;
+    rawAngle = navx.getAngle() - gyroZero;
   }
 
   @Override

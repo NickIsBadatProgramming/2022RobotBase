@@ -9,6 +9,8 @@ import frc.robot.subsystems.Accelerometer;
 import frc.robot.subsystems.DisplacementTracker;
 import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveUnit;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
 
 public class RobotContainer {
     //This is kind of the brain of the robot, it controls all subsystems and commands in one hub that is scheduled by the Robot class. 
@@ -27,6 +29,7 @@ public class RobotContainer {
     public static TalonFX driveMotorFL, steerMotorFL;
     public static TalonFX driveMotorBL, steerMotorBL;
     public static TalonFX driveMotorBR, steerMotorBR;
+    public static AHRS navx;
 
 
     public static CANCoder cFR, cFL, cBL, cBR;
@@ -39,11 +42,11 @@ public class RobotContainer {
     SwerveUnit backLeft = new SwerveUnit(Constants.SwerveConstants.WheelCircumferenceM, false, false, driveMotorBL, steerMotorBL, cBL, "Back Left");
     SwerveUnit backRight = new SwerveUnit(Constants.SwerveConstants.WheelCircumferenceM, false, false, driveMotorBR, steerMotorBR, cBR, "Back Right");
 
-    SwerveGroup swerve = new SwerveGroup(frontRight, frontLeft, backRight, backLeft);
+    SwerveGroup swerve = new SwerveGroup(frontRight, frontLeft, backRight, backLeft, navx);
 
     public RobotContainer() {
         logitech3d = new Joystick(0);
-
+        navx = new AHRS(SerialPort.Port.kMXP);
     }
 
     public void refreshPeriodic() {
