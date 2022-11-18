@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.SwerveConstants;
 
 public class SwerveGroup extends SubsystemBase{
@@ -79,11 +80,27 @@ public class SwerveGroup extends SubsystemBase{
         SwerveModuleState backLeft = moduleStates[2];
         SwerveModuleState backRight = moduleStates[3];
 
+        
+
+
+
         moduleFL2.GetMotorValues(frontLeft.speedMetersPerSecond, frontLeft.angle.getDegrees());
         moduleFR1.GetMotorValues(frontRight.speedMetersPerSecond, frontRight.angle.getDegrees());
         moduleBL3.GetMotorValues(backLeft.speedMetersPerSecond, backLeft.angle.getDegrees());
         moduleBR4.GetMotorValues(backRight.speedMetersPerSecond, backRight.angle.getDegrees());
     }
+
+    
+
+    public static boolean underRobotLimits(SwerveModuleState[] array)
+    {
+        for(int i = 0; i <= array.length; i++) {
+            if( array[i].speedMetersPerSecond <= Constants.JoystickLimits.VELOCITY_MAX_SPEED_MS) return false;
+        }
+        return true;
+    }
+
+
 
 
   @Override
