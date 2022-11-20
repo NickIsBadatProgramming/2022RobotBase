@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -98,6 +101,17 @@ public class SwerveGroup extends SubsystemBase{
             if( array[i].speedMetersPerSecond <= Constants.JoystickLimits.VELOCITY_MAX_SPEED_MS) return false;
         }
         return true;
+    }
+
+    public static double[] normalizeVelocities(double[] velocities) { //limit the velocites to the maximum velocity 
+        //get highest velocity in the group 
+        double maximum = 0;
+        for(int i = 0; i <= velocities.length; i++) {
+            if(maximum < velocities[i]) maximum = velocities[i];
+
+        }
+
+        
     }
 
 

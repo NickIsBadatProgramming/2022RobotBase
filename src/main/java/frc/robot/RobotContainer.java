@@ -70,7 +70,7 @@ public class RobotContainer {
     }
 
     public void Drive() {
-        swerve.Drive(Constants.JoystickLimits.getXFromJoystickPosition(this.xAxis), Constants.JoystickLimits.getYFromJoystickPosition(this.yAxis), Constants.JoystickLimits.getZFromJoystickPosition(this.zAxis));
+        swerve.Drive(Constants.JoystickLimits.getVelocityFromJoystickPosition(this.xAxis), Constants.JoystickLimits.getVelocityFromJoystickPosition(this.yAxis), Constants.JoystickLimits.getZFromJoystickPosition(this.zAxis));
     }
 
     /* ---- Onboard Measurements ---- */
