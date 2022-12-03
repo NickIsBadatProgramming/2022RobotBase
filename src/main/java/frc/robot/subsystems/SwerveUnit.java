@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.SwerveConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -66,12 +66,12 @@ public class SwerveUnit extends SubsystemBase {
     else {
       double rotationDegrees = GetClosestAngle(desiredAngle, this.rawAngle);
 
-      this.driveMotorSpeed = ((60 * speedM_S)/this.circumferenceM) * Constants.SwerveConstants.SWERVE_GEAR_RATIO_DRIVE;
+      this.driveMotorSpeed = ((60 * speedM_S)/this.circumferenceM) * SwerveConstants.SWERVE_GEAR_RATIO_DRIVE;
       if(invertedDrive) {
         this.driveMotorSpeed = this.driveMotorSpeed * -1;
       }
-      this.driveMotorSpeed = this.driveMotorSpeed * Constants.SwerveConstants.CalculateFalloffMultiplier(GetClosestAngle(desiredAngle, this.rawAngle));
-      this.steerMotorSpeed = ((60 * rotationDegrees)/(360 * Constants.SwerveConstants.MODULE_TURN_TIME_SECONDS)) * Constants.SwerveConstants.SWERVE_GEAR_RATIO_STEER;
+      this.driveMotorSpeed = this.driveMotorSpeed * SwerveConstants.CalculateFalloffMultiplier(GetClosestAngle(desiredAngle, this.rawAngle));
+      this.steerMotorSpeed = ((60 * rotationDegrees)/(360 * SwerveConstants.MODULE_TURN_TIME_SECONDS)) * SwerveConstants.SWERVE_GEAR_RATIO_STEER;
     }
   }
 
@@ -93,8 +93,8 @@ public class SwerveUnit extends SubsystemBase {
     if(rawAngle < 0) {
       rawAngle = 360 + rawAngle;
     }
-    driveMotor.set(ControlMode.Velocity, Constants.SwerveConstants.RPMToFalconVelocity(this.driveMotorSpeed));
-    steerMotor.set(ControlMode.Velocity, Constants.SwerveConstants.RPMToFalconVelocity(this.steerMotorSpeed));
+    driveMotor.set(ControlMode.Velocity, SwerveConstants.RPMToFalconVelocity(this.driveMotorSpeed));
+    steerMotor.set(ControlMode.Velocity, SwerveConstants.RPMToFalconVelocity(this.steerMotorSpeed));
     SmartDashboard.putNumber("Module " + moduleName + "Value:", this.rawAngle);
   }
 

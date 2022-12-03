@@ -4,9 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -15,7 +12,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.JoystickLimits;
 import frc.robot.Constants.SwerveConstants;
 
 public class SwerveGroup extends SubsystemBase{
@@ -83,9 +80,13 @@ public class SwerveGroup extends SubsystemBase{
         SwerveModuleState backLeft = moduleStates[2];
         SwerveModuleState backRight = moduleStates[3];
 
-        
 
 
+        //normalize the speeds if they are over a maximumm set speed
+
+        if(!underRobotLimits(moduleStates)) {
+            moduleStates = normalizeVelocities(moduleStates);
+        }
 
         moduleFL2.GetMotorValues(frontLeft.speedMetersPerSecond, frontLeft.angle.getDegrees());
         moduleFR1.GetMotorValues(frontRight.speedMetersPerSecond, frontRight.angle.getDegrees());
@@ -98,20 +99,24 @@ public class SwerveGroup extends SubsystemBase{
     public static boolean underRobotLimits(SwerveModuleState[] array)
     {
         for(int i = 0; i <= array.length; i++) {
-            if( array[i].speedMetersPerSecond <= Constants.JoystickLimits.VELOCITY_MAX_SPEED_MS) return false;
+            if( array[i].speedMetersPerSecond <= JoystickLimits.VELOCITY_MAX_SPEED_MS) return false;
         }
         return true;
     }
 
-    public static double[] normalizeVelocities(double[] velocities) { //limit the velocites to the maximum velocity 
+    public static SwerveModuleState[] normalizeVelocities(SwerveModuleState[] array) { //limit the velocites to the maximum velocity 
         //get highest velocity in the group 
         double maximum = 0;
-        for(int i = 0; i <= velocities.length; i++) {
-            if(maximum < velocities[i]) maximum = velocities[i];
+        for(int i = 0; i <= array.length; i++) {
+            if(maximum < array[i].speedMetersPerSecond) maximum = array[i].speedMetersPerSecond;
 
         }
 
-        
+        for(int i = 0; i <= array.length; i++ ) {
+            array[i].speedMetersPerSecond = (JoystickLimits.VELOCITY_MAX_SPEED_MS*(array[i].speedMetersPerSecond / maximum));
+        }
+
+        return array;
     }
 
 
