@@ -11,6 +11,7 @@ import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveUnit;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
     //This is kind of the brain of the robot, it controls all subsystems and commands in one hub that is scheduled by the Robot class. 
@@ -52,19 +53,19 @@ public class RobotContainer {
         steerMotorFR = new TalonFX(1);
         driveMotorFL = new TalonFX(2);
         steerMotorFL = new TalonFX(3);
-        driveMotorBL = new TalonFX(4);
+        driveMotorBL = new TalonFX(4); 
         steerMotorBL = new TalonFX(5);
         driveMotorBR = new TalonFX(6);
         steerMotorBR = new TalonFX(7);
-        
+
         
 
     }
 
     public void refreshPeriodic() {
-        this.xAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(1));
-        this.yAxis = Constants.JoystickLimits.adjustForDeadzone(-logitech3d.getRawAxis(2));
-        this.zAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(3));
+        this.xAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(0));
+        this.yAxis = Constants.JoystickLimits.adjustForDeadzone(-logitech3d.getRawAxis(1));
+        this.zAxis = Constants.JoystickLimits.adjustForDeadzone(logitech3d.getRawAxis(2));
     }
 
     public void haltAllModules() {
@@ -83,6 +84,10 @@ public class RobotContainer {
 
     public void Drive() {
         swerve.Drive(Constants.JoystickLimits.getVelocityFromJoystickPosition(this.xAxis), Constants.JoystickLimits.getVelocityFromJoystickPosition(this.yAxis), Constants.JoystickLimits.getZFromJoystickPosition(this.zAxis));
+        SmartDashboard.putNumber("X axis", xAxis);
+        SmartDashboard.putNumber("Y axis", yAxis);
+        SmartDashboard.putNumber("Z axis", zAxis);
+
     }
 
     /* ---- Onboard Measurements ---- */

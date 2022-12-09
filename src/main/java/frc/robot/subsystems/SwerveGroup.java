@@ -81,17 +81,11 @@ public class SwerveGroup extends SubsystemBase{
         SwerveModuleState backRight = moduleStates[3];
 
 
-
-        //normalize the speeds if they are over a maximumm set speed
-
-        if(!underRobotLimits(moduleStates)) {
-            moduleStates = normalizeVelocities(moduleStates);
-        }
-
         moduleFL2.GetMotorValues(frontLeft.speedMetersPerSecond, frontLeft.angle.getDegrees());
         moduleFR1.GetMotorValues(frontRight.speedMetersPerSecond, frontRight.angle.getDegrees());
         moduleBL3.GetMotorValues(backLeft.speedMetersPerSecond, backLeft.angle.getDegrees());
         moduleBR4.GetMotorValues(backRight.speedMetersPerSecond, backRight.angle.getDegrees());
+
     }
 
     

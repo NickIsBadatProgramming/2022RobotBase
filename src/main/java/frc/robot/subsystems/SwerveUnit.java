@@ -70,7 +70,7 @@ public class SwerveUnit extends SubsystemBase {
       if(invertedDrive) {
         this.driveMotorSpeed = this.driveMotorSpeed * -1;
       }
-      this.driveMotorSpeed = this.driveMotorSpeed * SwerveConstants.CalculateFalloffMultiplier(GetClosestAngle(desiredAngle, this.rawAngle));
+     // this.driveMotorSpeed = this.driveMotorSpeed * SwerveConstants.CalculateFalloffMultiplier(GetClosestAngle(desiredAngle, this.rawAngle));
       this.steerMotorSpeed = ((60 * rotationDegrees)/(360 * SwerveConstants.MODULE_TURN_TIME_SECONDS)) * SwerveConstants.SWERVE_GEAR_RATIO_STEER;
     }
   }
@@ -96,6 +96,8 @@ public class SwerveUnit extends SubsystemBase {
     driveMotor.set(ControlMode.Velocity, SwerveConstants.RPMToFalconVelocity(this.driveMotorSpeed));
     steerMotor.set(ControlMode.Velocity, SwerveConstants.RPMToFalconVelocity(this.steerMotorSpeed));
     SmartDashboard.putNumber("Module " + moduleName + "Value:", this.rawAngle);
+
+
   }
 
 
