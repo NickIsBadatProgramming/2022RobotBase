@@ -31,7 +31,6 @@ public class RobotContainer {
     public static TalonFX driveMotorBR, steerMotorBR;
     public static AHRS navx;
 
-
     public static CANCoder cFR, cFL, cBL, cBR;
 
     double xAxis, yAxis, zAxis;
@@ -47,6 +46,19 @@ public class RobotContainer {
     public RobotContainer() {
         logitech3d = new Joystick(0);
         navx = new AHRS(SerialPort.Port.kMXP);
+
+        //Get the motor ID's
+        driveMotorFR = new TalonFX(0);
+        steerMotorFR = new TalonFX(1);
+        driveMotorFL = new TalonFX(2);
+        steerMotorFL = new TalonFX(3);
+        driveMotorBL = new TalonFX(4);
+        steerMotorBL = new TalonFX(5);
+        driveMotorBR = new TalonFX(6);
+        steerMotorBR = new TalonFX(7);
+        
+        
+
     }
 
     public void refreshPeriodic() {
