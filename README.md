@@ -1,7 +1,8 @@
 
 #  - 2023RobotBase -
 
-A basic tool used for preparing 2023's robot code. 
+A basic tool used for preparing 2023's robot code. *THIS IS OUTDATED* 
+Please use commandBased2023 because it has been tested and this code is not properly formatted for a command based robot. 
 
 Implementations:
 
